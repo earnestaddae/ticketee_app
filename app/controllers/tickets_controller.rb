@@ -1,5 +1,6 @@
 class TicketsController < ApplicationController
   before_action :set_project
+  before_action :set_ticket, only: %i(show edit update destroy)
 
   def new
     @ticket = @project.tickets.build
@@ -12,9 +13,12 @@ class TicketsController < ApplicationController
       flash[:notice] = "Ticket has been created."
       redirect_to [@project, @ticket]
     else
-      flash.now[:alert] = "Ticket has not beed created."
+      flash.now[:alert] = "Ticket has not been created."
       render "new"
     end
+  end
+
+  def show
   end
 
 
@@ -23,6 +27,10 @@ class TicketsController < ApplicationController
 
     def ticket_params
       params.require(:ticket).permit(:name, :description)
+    end
+
+    def set_ticket
+      @ticket = @project.tickets.find(params[:id])
     end
 
     def set_project
