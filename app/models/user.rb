@@ -16,4 +16,14 @@ class User < ApplicationRecord
   def archive!
     self.update(archived_at: Time.now)
   end
+
+  # checks whether a user is authenticated to sign in
+  def active_for_authentication?
+    super && archived_at.nil?
+  end
+
+  # display the right message to inform user they are archived
+  def inactive_message
+    archived_at.nil? ? super : :archived
+  end
 end
