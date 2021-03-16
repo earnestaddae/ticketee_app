@@ -39,16 +39,35 @@ RSpec.feature "Users can create new tickets" do
     expect(page).to have_content "Description is too short"
   end
 
-  scenario "with an attachement" do
-    fill_in "Name", with: "Add documentation for blink tag"
-    fill_in "Description", with: "The blink tage has a speed attribute"
-    attach_file "File", "spec/fixtures/speed.txt"
+  # scenario "with an attachement" do
+  #   fill_in "Name", with: "Add documentation for blink tag"
+  #   fill_in "Description", with: "The blink tage has a speed attribute"
+  #   attach_file "File", "spec/fixtures/speed.txt"
+  #   click_button "Create Ticket"
+
+  #   expect(page).to have_content "Ticket has been created."
+
+  #   within(".ticket .attachment") do
+  #     expect(page).to have_content "speed.txt"
+  #   end
+  # end
+
+  scenario "with multiple attachments", js: true do
+    fill_in "Name", with: "Add documentation for a blink tag"
+    fill_in "Description", with: "The blink tag has a speed attribute"
+
+    attach_file("spec/fixtures/gradient.txt", class: "dz-hidden-input", visible: false)
+    attach_file("spec/fixtures/speed.txt", class: "dz-hidden-input", visible: false)
+    attach_file("spec/fixtures/spin.txt", class: "dz-hidden-input", visible: false)
+
     click_button "Create Ticket"
 
     expect(page).to have_content "Ticket has been created."
 
-    within(".ticket .attachment") do
+    within(".ticket .attachments") do
       expect(page).to have_content "speed.txt"
+      expect(page).to have_content "spin.txt"
+      expect(page).to have_content "gradient.txt"
     end
   end
 end
