@@ -30,12 +30,25 @@ RSpec.feature "Users can create new tickets" do
     expect(page).to have_content "Description can't be blank"
   end
 
-  scenario "witn an invalid description" do
+  scenario "with an invalid description" do
     fill_in "Name", with: "Non-standards compliance"
     fill_in "Description", with: "It sucks"
     click_button "Create Ticket"
 
     expect(page).to have_content "Ticket has not been created."
     expect(page).to have_content "Description is too short"
+  end
+
+  scenario "with an attachement" do
+    fill_in "Name", with: "Add documentation for blink tag"
+    fill_in "Description", with: "The blink tage has a speed attribute"
+    attach_file "File", "spec/fixtures/speed.txt"
+    click_button "Create Ticket"
+
+    expect(page).to have_content "Ticket has been created."
+
+    within(".ticket .attachment") do
+      expect(page).to have_content "speed.txt"
+    end
   end
 end
