@@ -4,8 +4,8 @@
   <%= form.text_area :description %>
   <%#= form.file_field :attachment, label: "File" %>
 
+  <% upload_url = upload_file_project_tickets_path(project) %>
+  <div class="dropzone uploader mb-2" data-url="<%= upload_url %>"></div>
+
   <%= form.primary %>
 <% end %>
-
-<% upload_url = upload_file_project_tickets_path(project) %>
-<div class="dropzone uploader mb-2" data-url="<%= upload_url %>"></div>
