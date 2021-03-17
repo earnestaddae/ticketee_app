@@ -70,4 +70,8 @@ a.delete {
   @extend .alert-danger;
 }
 
+.tickets li, .states li {
+  padding-bottom: 10px;
+}
+
 
