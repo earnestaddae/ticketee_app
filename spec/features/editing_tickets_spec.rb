@@ -29,6 +29,36 @@ RSpec.feature "Users can edit existing tickets" do
     expect(page).to have_content "Ticket has not been updated."
   end
 
+  context "when ticket has tags" do
+    before do
+      ticket.tags << FactoryBot.create(:tag, name: "Visual Testing")
+      ticket.tags << FactoryBot.create(:tag, name: "Browser")
+    end
+
+    it "sees existing tags on edit form" do
+      click_link "Edit Ticket"
+
+      within(".tags") do
+        expect(page).to have_content("Visual Testing")
+        expect(page).to have_content("Browser")
+      end
+    end
+
+    it "can add new tags to a ticket" do
+      click_link "Edit Ticket"
+      fill_in "Tags", with: "regression, bug"
+      click_button "Update Ticket"
+      expect(page).to have_content "Ticket has been updated."
+
+      within(".ticket .attributes .tags") do
+        expect(page).to have_content("Visual Testing")
+        expect(page).to have_content("Browser")
+        expect(page).to have_content("regression")
+        expect(page).to have_content("bug")
+      end
+    end
+  end
+
   scenario "with multiple attachments", js: true do
     click_link "Edit Ticket"
     attach_file("spec/fixtures/spin.txt", class: 'dz-hidden-input', visible: false)
