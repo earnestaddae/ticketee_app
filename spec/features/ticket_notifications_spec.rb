@@ -7,7 +7,7 @@ RSpec.feature "Users can receive notifications about ticket updates" do
   let(:bob) { FactoryBot.create(:user, email: "bob@example.com") }
   let(:project) { FactoryBot.create(:project) }
   let(:ticket) do
-    FactoryBot.create(:ticket, project: project: author: alice)
+    FactoryBot.create(:ticket, project: project, author: alice)
   end
 
   before do
@@ -24,7 +24,7 @@ RSpec.feature "Users can receive notifications about ticket updates" do
     perform_enqueued_jobs
 
     email = find_email!(alice.email)
-    expected_subject = "[Ticketee] #{project.name} - #{ticket.name}"
+    expected_subject = "#{project.name} - #{ticket.name}"
     expect(email.subject).to eq expected_subject
 
     click_email_link_matching(/projects/, email)
