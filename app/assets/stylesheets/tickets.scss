@@ -16,6 +16,21 @@
   @extend .mb-1;
 }
 
+.tag {
+  @extend .state, .mr-1, .mb-1, .border;
+  color: black;
+  font-size: 85%;
+
+  a {
+    color: black;
+    &.remove {
+      font-family: "FontAwesome";
+      @extend .fa-close;
+      text-decoration: none;
+    }
+  }
+}
+
 .watch,
 .unwatch {
   @extend .btn, .btn-sm, .d-block;
