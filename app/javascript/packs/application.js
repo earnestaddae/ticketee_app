@@ -11,7 +11,7 @@ import "jquery"
 import "popper.js"
 import "bootstrap"
 require("../src/dropzone");
-require("../src/tags");
+require("../src/tag");
 
 
 Rails.start()
