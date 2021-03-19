@@ -16,6 +16,10 @@ class Ticket < ApplicationRecord
   validates :description, presence: true, length: { minimum: 10 }
 
 
+  searcher do
+    label :tag, from: :tags, field: "name"
+  end
+
 
   private
 
