@@ -14,9 +14,9 @@ Rails.application.routes.draw do
       end
     end
   end
+  root "projects#index"
 
   devise_for :users
-  root "projects#index"
 
   resources :projects, only: [:index, :show] do
     resources :tickets do
